@@ -6,6 +6,7 @@
 package view.component;
 
 import controller.ListenExit;
+import controller.ListenHomeOpen;
 import controller.ListenUsersOpen;
 import java.awt.Dimension;
 import java.io.IOException;
@@ -23,6 +24,8 @@ import view.UserList;
 public class MenuLeft extends JToolBar {
     JButton btnHome, btnUser, btnRules, btnExit;
     Views views;
+    int tabUser = 0, tabRule = 0;
+    @SuppressWarnings("empty-statement")
     public MenuLeft() {
         super(null, JToolBar.VERTICAL);
         this.setRollover(true);
@@ -62,24 +65,31 @@ public class MenuLeft extends JToolBar {
         btnExit.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         btnExit.setPreferredSize(new Dimension(40, 40));
         btnExit.setBorder(BorderFactory.createEmptyBorder());
-        /*
-        ListenExit.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
-            }
-        });
-        */
+
         this.add(btnExit);
     }
-    public void setEventExit(Index exit) {
-        btnExit.addActionListener(new ListenExit(exit));
+    public void setEventHomeOpen(Views views) {
+        this.views = views;
+        btnHome.addActionListener(new ListenHomeOpen(this));
+    }
+    public void openHome() throws NoSuchFieldException, SQLException, IllegalArgumentException, IllegalAccessException, IOException, ClassNotFoundException, InstantiationException {
+        this.views.setSelectedIndex(0);
     }
     public void setEventUserOpen(Views views) {
         this.views = views;
         btnUser.addActionListener(new ListenUsersOpen(this));
     }
-    public void openUserLIst() throws NoSuchFieldException, SQLException, IllegalArgumentException, IllegalAccessException, IOException, ClassNotFoundException, InstantiationException {
-        UserList userList = new UserList();
-        this.views.addTab("Lista de Usuarios", userList);
+    public void openUserList() throws NoSuchFieldException, SQLException, IllegalArgumentException, IllegalAccessException, IOException, ClassNotFoundException, InstantiationException {
+        if(tabUser == 0) {
+            UserList userList = new UserList();
+            this.views.addTab("Lista de Usuarios", userList);
+            tabUser = this.views.indexOfComponent(userList);
+            this.views.setSelectedIndex(tabUser);
+        } else {
+            this.views.setSelectedIndex(tabUser);
+        }
+    }
+    public void setEventExit(Index exit) {
+        btnExit.addActionListener(new ListenExit(exit));
     }
 }

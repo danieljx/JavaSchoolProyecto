@@ -8,6 +8,8 @@ package view;
 import controller.Session;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -33,6 +35,11 @@ public class Index extends JFrame {
     public Index(Login login) {
         this.login = login;
         initComponents();
+        this.addWindowListener(new WindowAdapter() {
+           public void windowClosing(WindowEvent we) {
+              System.exit(0);
+           }
+        });
     }
 
     private void initComponents() {
@@ -51,6 +58,7 @@ public class Index extends JFrame {
         
         views = new Views();
         menuLeft.setEventUserOpen(views);
+        menuLeft.setEventHomeOpen(views);
         
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);

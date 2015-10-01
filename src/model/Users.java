@@ -9,6 +9,7 @@ import controller.Session;
 import java.io.IOException;
 import java.lang.reflect.Field;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import library.db.Connect;
@@ -20,7 +21,7 @@ import library.db.Service;
  */
 public class Users {
 
-    private int user_id;
+    private String user_id;
     private String user_title;
     private String user_email;
     private String user_name;
@@ -29,15 +30,17 @@ public class Users {
     private String lastvisitDate;
     private String user_lock;
     private String user_sta;
-    private int rule_id;
+    private String user_status;
+    private String rule_id;
+    private String rule_name;
     private String ter_name;
-    private int third_id;
-    private int user_try;
+    private String third_id;
+    private String user_try;
     private String accion;
     private String view;
     private final String table  = "sys_user";
     private final String id     = "user_id";
-    public List<Map<String, String>> dataList;
+    public List<Map<String, String>> dataList = new ArrayList<>();
 
     public Users(Map<String, String> filterData) throws IllegalArgumentException, IllegalAccessException, NoSuchFieldException {
         this.requestUsers(filterData);
@@ -125,7 +128,7 @@ public class Users {
         if(Session.getUserId() != 1) {
                sql+= "and u.user_lock = 'N'\n";
         }
-        if(this.user_id != 0) {
+        if(this.user_id != null && !this.user_id.isEmpty()) {
                sql+= "and u.user_id = " + this.user_id + "\n";
         }
         if(this.user_name != null && !this.user_name.isEmpty()) {
@@ -137,7 +140,7 @@ public class Users {
         if(this.user_email != null && !this.user_email.isEmpty()) {
                sql+= "and u.user_email like '%" + this.user_email + "%'\n";
         }
-        if(this.rule_id != 0) {
+        if(this.rule_id != null && !this.rule_id.isEmpty()) {
                sql+= "and u.rule_id = " + this.rule_id + "\n";
         }
         this.dataList = db.setQueryGetList(sql);

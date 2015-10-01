@@ -12,6 +12,7 @@ import javax.swing.DefaultCellEditor;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.ListSelectionModel;
 
 /**
  *
@@ -32,6 +33,7 @@ public class TableList extends JTable{
         this.typeColumns = typeColumns;
         this.setPreferredScrollableViewportSize(new Dimension(width,height));
         this.setFillsViewportHeight(false);
+        this.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
     }
     public TableList(TableModels tm) {
         super(tm);
@@ -45,6 +47,9 @@ public class TableList extends JTable{
             this.getColumnModel().getColumn(i).setMinWidth(dWidth.intValue());
             this.getColumnModel().getColumn(i).setCellEditor(new DefaultCellEditor(campo));
         }
+    }
+    public boolean editCellAt(int row, int column, java.util.EventObject e) {
+       return false;
     }
     public void setRow(Object[] dato) {
         tableModel.addRow(dato);

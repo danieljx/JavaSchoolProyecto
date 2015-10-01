@@ -17,17 +17,17 @@ import view.component.MenuLeft;
  *
  * @author dvillanueva
  */
-public class ListenUsersOpen implements ActionListener {
+public class ListenHomeOpen implements ActionListener {
     MenuLeft menuLeft;
 
-    public ListenUsersOpen(MenuLeft menuLeft) {
+    public ListenHomeOpen(MenuLeft menuLeft) {
         this.menuLeft = menuLeft;
     }
     
     @Override
     public void actionPerformed(ActionEvent ae) {
         try {
-            this.menuLeft.openUserList();
+            this.menuLeft.openHome();
         } catch (NoSuchFieldException ex) {
             Logger.getLogger(ListenUsersOpen.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {

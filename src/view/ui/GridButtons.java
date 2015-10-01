@@ -20,7 +20,7 @@ public class GridButtons extends JPanel {
         for (int i = 0; i < names.length; i++){
             buttons[i] = new JButton(names[i]);
             this.add(buttons[i]);
-        } 
+        }
     }
     public void addListener(int numButton, ActionListener listen){
         if (numButton >= 0 && numButton < 3) {
