@@ -158,8 +158,6 @@ public final class UserList extends JPanel {
                 .addComponent(jButton5)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton3)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -170,8 +168,7 @@ public final class UserList extends JPanel {
                     .addComponent(jButton1)
                     .addComponent(jButton5)
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jButton2)
-                        .addComponent(jButton3)))
+                        .addComponent(jButton2)))
                 .addContainerGap(33, Short.MAX_VALUE))
         );
         javax.swing.GroupLayout fillPanelLayout = new javax.swing.GroupLayout(fillPanel);

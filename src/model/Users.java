@@ -36,6 +36,8 @@ public class Users {
     private String ter_name;
     private String third_id;
     private String user_try;
+    private String user_asq;
+    private String user_answ;
     private String accion;
     private String view;
     private final String table  = "sys_user";
@@ -135,6 +137,22 @@ public class Users {
                             }
                             sqlI+= "  user_try\n";
                         }
+                        if(this.user_asq != null && !this.user_asq.equals("null")) {
+                            if(seconds) {
+                                sqlI+= ",";
+                            } else {
+                                seconds = true;
+                            }
+                            sqlI+= "  user_asq\n";
+                        }
+                        if(this.user_answ != null && !this.user_answ.equals("null")) {
+                            if(seconds) {
+                                sqlI+= ",";
+                            } else {
+                                seconds = true;
+                            }
+                            sqlI+= "  user_answ\n";
+                        }
                         if(seconds) {
                             sqlI+= ",";
                         }
@@ -216,6 +234,22 @@ public class Users {
                                 seconds = true;
                             }
                             sqlI+= "'" + this.user_try + "'\n";
+                        }
+                        if(this.user_asq != null && !this.user_asq.equals("null")) {
+                            if(seconds) {
+                                sqlI+= ",";
+                            } else {
+                                seconds = true;
+                            }
+                            sqlI+= "'" + this.user_asq + "'\n";
+                        }
+                        if(this.user_answ != null && !this.user_answ.equals("null")) {
+                            if(seconds) {
+                                sqlI+= ",";
+                            } else {
+                                seconds = true;
+                            }
+                            sqlI+= "'" + this.user_answ + "'\n";
                         }
                         if(seconds) {
                             sqlI+= ",";
@@ -305,6 +339,22 @@ public class Users {
                             }
                             sqlU+= "  user_try    = '" + this.user_try + "'\n";
                         }
+                        if(this.user_asq != null && !this.user_asq.equals("null")) {
+                            if(seconds) {
+                                sqlU+= ",";
+                            } else {
+                                seconds = true;
+                            }
+                            sqlU+= "  user_asq    = '" + this.user_asq + "'\n";
+                        }
+                        if(this.user_answ != null && !this.user_answ.equals("null")) {
+                            if(seconds) {
+                                sqlU+= ",";
+                            } else {
+                                seconds = true;
+                            }
+                            sqlU+= "  user_answ    = '" + this.user_answ + "'\n";
+                        }
                        sqlU+= "Where " + id + " = '" + this.user_id + "'\n";
                        db.query.executeUpdate(sqlU);
             }
@@ -325,6 +375,8 @@ public class Users {
                sql+= "      ,u.ter_name\n";
                sql+= "      ,u.third_id\n";
                sql+= "      ,u.user_try\n";
+               sql+= "      ,u.user_asq\n";
+               sql+= "      ,u.user_answ\n";
                sql+= "      ,DATE_FORMAT(u.registerDate,'%d/%m/%Y') as registerDate\n";
                sql+= "      ,DATE_FORMAT(u.lastvisitDate,'%d/%m/%Y %H:%i:%s') as lastvisitDate\n";
                sql+= "      ,r.rule_name\n";

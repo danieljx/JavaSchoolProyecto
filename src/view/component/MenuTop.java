@@ -17,11 +17,11 @@ public class MenuTop extends JMenuBar{
     public MenuTop() {
         JMenu jMenu1 = new JMenu();
         jMenu1.setText("File");
-        this.add(jMenu1);
+        //this.add(jMenu1);
 
         JMenu jMenu2 = new JMenu();
         jMenu2.setText("Edit");
-        this.add(jMenu2);
+        //this.add(jMenu2);
     }
     
 }

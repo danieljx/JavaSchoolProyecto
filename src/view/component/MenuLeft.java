@@ -56,7 +56,7 @@ public class MenuLeft extends JToolBar {
         btnRules.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         btnRules.setPreferredSize(new Dimension(40, 40));
         btnRules.setBorder(BorderFactory.createEmptyBorder());
-        this.add(btnRules);
+        //this.add(btnRules);
         this.addSeparator();
         btnExit = new JButton();
         btnExit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/ui/glyphicons/glyphicons-64-power.png")));
