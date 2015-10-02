@@ -5,16 +5,22 @@
  */
 package view;
 
+import controller.Session;
 import java.awt.Dialog;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JTable;
+import library.db.Connect;
+import library.db.Service;
 import model.Users;
+import view.ui.TableList;
 
 /**
  *
@@ -22,13 +28,31 @@ import model.Users;
  */
 public class UserForm extends javax.swing.JFrame {
     Map<String, String> userRowData;
-    JTable userTable;
+    TableList userTable;
+    String[] RuleDataModel;
+    List<Map<String, String>> userDataModel;
     /**
      * Creates new form NewJFrame1
      */
-    public UserForm(Map<String, String> userRowData,JTable userTable) {
+    public UserForm(Map<String, String> userRowData,TableList userTable, List<Map<String, String>> userDataModel) throws SQLException, IOException, ClassNotFoundException, InstantiationException, IllegalAccessException {
         this.userRowData = userRowData;
         this.userTable = userTable;
+        this.userDataModel = userDataModel;
+        Connect db = Service.getInstance().getConnectDB();
+        String sql = "Select r.rule_name\n";
+               sql+= "From sys_rule r\n";
+               sql+= "Where r.rule_sta = 'S'\n";
+               if(1 != Session.getUserId()) {
+                sql+= "  and r.rule_look = 'N'\n";
+               }
+        List<Map<String, String>> dataList = db.setQueryGetList(sql);
+        this.RuleDataModel = new String[dataList.size()];
+        int count = 0;
+        for(Map<String, String> map : dataList) {
+            this.RuleDataModel[count] = map.get("rule_name");
+            count ++;
+        }
+        
         initComponents();
         this.addWindowListener(new WindowAdapter() {
              public void windowClosing(WindowEvent we) {
@@ -112,13 +136,15 @@ public class UserForm extends javax.swing.JFrame {
 
         passLabel.setText("Contraseña");
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(RuleDataModel));
+        jComboBox1.setSelectedItem(userRowData.get("rule_name"));
 
         jLabel5.setText("Roles");
 
         passField.setText(userRowData.get("user_pass"));
 
         staComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Activo", "Inactivo" }));
+        staComboBox.setSelectedItem(userRowData.get("user_status"));
 
         staLabel.setText("Estatus");
 
@@ -215,6 +241,26 @@ public class UserForm extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void setSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_setSaveActionPerformed
+        Connect db;
+        try {
+            db = Service.getInstance().getConnectDB();
+        String sql = "Select r.rule_id\n";
+               sql+= "From sys_rule r\n";
+               sql+= "Where r.rule_name = '" + jComboBox1.getSelectedItem().toString() + "'\n";
+        List<Map<String, String>> dataList;
+            dataList = db.setQueryGetList(sql);
+            userRowData.put("rule_id", dataList.get(0).get("rule_id"));
+        } catch (IOException ex) {
+            Logger.getLogger(UserForm.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(UserForm.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            Logger.getLogger(UserForm.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            Logger.getLogger(UserForm.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(UserForm.class.getName()).log(Level.SEVERE, null, ex);
+        }
         if(userRowData.get("user_id").isEmpty()) {
             userRowData.put("accion", "add");
         } else {
@@ -231,10 +277,20 @@ public class UserForm extends javax.swing.JFrame {
         try {
             userModel = new Users(userRowData);
             userModel.setUsers();
-            int row = this.userTable.getSelectedRow();
-            this.userTable.setValueAt(userNameField.getText(), row, 0);
-            this.userTable.setValueAt(emailField.getText(), row, 1);
-            this.userTable.setValueAt(staComboBox.getSelectedItem().toString(), row, 2);
+            if(userRowData.get("accion").equals("upd")) {
+                int row = this.userTable.getSelectedRow();
+                this.userTable.setValueAt(userNameField.getText(), row, 0);
+                this.userTable.setValueAt(emailField.getText(), row, 1);
+                this.userTable.setValueAt(staComboBox.getSelectedItem().toString(), row, 2);
+            } else {
+                userRowData.put("user_status", staComboBox.getSelectedItem().toString());
+                Object[] data = new Object[3];
+                data[0] = userRowData.get("ter_name");
+                data[1] = userRowData.get("user_email");
+                data[2] = userRowData.get("user_status");
+                this.userTable.setRow(data);
+                this.userDataModel.add(userRowData);
+            }
             this.dispose();
         } catch (IllegalArgumentException ex) {
             Logger.getLogger(UserForm.class.getName()).log(Level.SEVERE, null, ex);

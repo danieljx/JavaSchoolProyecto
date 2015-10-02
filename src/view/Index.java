@@ -52,7 +52,7 @@ public class Index extends JFrame {
         this.setJMenuBar(jMenuBar);
         
         labelUser = new JLabel();
-        labelUser.setText(Session.getThirdNames());
+        labelUser.setText(Session.getThirdNames() + " - Ultima Visita: " + Session.getUserLastLog());
         menuLeft = new MenuLeft();
         menuLeft.setEventExit(this);
         

@@ -192,6 +192,7 @@ public class Login extends javax.swing.JFrame {
                    sql+= "	,u.user_try\n";
                    sql+= "	,u.user_sta\n";
                    sql+= "	,u.user_name\n";
+                   sql+= "	,u.lastvisitDate\n";
                    sql+= "	,if(t.third_id is null,u.user_title,concat(ifnull(t.third_name,''),' ',ifnull(t.third_lastname,''))) as user_names\n";
                    sql+= "From sys_user u\n";
                    sql+= "Left Join mod_third t on t.third_id = u.third_id\n";
@@ -206,6 +207,7 @@ public class Login extends javax.swing.JFrame {
                 Session.setUserStatus(userSta);
                 Session.setUserName((String) map.get("user_name"));
                 Session.setUserThirdNames((String) map.get("user_names"));
+                Session.setUserLastLog((String) map.get("lastvisitDate"));
                 countUser++;
             }
             if(countUser > 0) {

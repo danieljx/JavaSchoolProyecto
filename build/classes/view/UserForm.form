@@ -220,13 +220,11 @@
     </Component>
     <Component class="javax.swing.JComboBox" name="jComboBox1">
       <Properties>
-        <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-          <StringArray count="4">
-            <StringItem index="0" value="Item 1"/>
-            <StringItem index="1" value="Item 2"/>
-            <StringItem index="2" value="Item 3"/>
-            <StringItem index="3" value="Item 4"/>
-          </StringArray>
+        <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+          <Connection code="new javax.swing.DefaultComboBoxModel(RuleDataModel)" type="code"/>
+        </Property>
+        <Property name="selectedItem" type="java.lang.Object" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+          <Connection code="userRowData.get(&quot;rule_name&quot;)" type="code"/>
         </Property>
       </Properties>
     </Component>
@@ -249,6 +247,9 @@
             <StringItem index="0" value="Activo"/>
             <StringItem index="1" value="Inactivo"/>
           </StringArray>
+        </Property>
+        <Property name="selectedItem" type="java.lang.Object" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+          <Connection code="userRowData.get(&quot;user_status&quot;)" type="code"/>
         </Property>
       </Properties>
     </Component>

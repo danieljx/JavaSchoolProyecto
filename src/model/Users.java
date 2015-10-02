@@ -54,50 +54,257 @@ public class Users {
     }
     public void setUsers() throws IOException, ClassNotFoundException, InstantiationException, IllegalAccessException, SQLException {
     	Connect db = Service.getInstance().getConnectDB();
+        boolean seconds = false;
 	if( !"del".equals(this.accion)) {
             if("add".equals(this.accion)) {
                 String sqlI = "Insert Into " + this.table + "\n"; 
-                       sqlI+= " (user_name\n"; 
-                       sqlI+= " ,user_sta\n";
-                       sqlI+= " ,user_title\n";
-                       sqlI+= " ,user_email\n";
-                       sqlI+= " ,user_pass\n";
-                       sqlI+= " ,user_lock\n";
-                       sqlI+= " ,rule_id\n";
-                       sqlI+= " ,user_sta\n";
-                       sqlI+= " ,ter_name\n";
-                       sqlI+= " ,third_id\n";
-                       sqlI+= " ,user_try\n";
-                       sqlI+= " ,registerDate\n";
+                       sqlI+= " (\n";
+                        if(this.user_name != null && !this.user_name.equals("null")) {
+                            sqlI+= "user_name\n"; 
+                            seconds = true;
+                        }
+                        if(this.user_sta != null && !this.user_sta.equals("null")) {
+                            if(seconds) {
+                                sqlI+= ",";
+                            } else {
+                                seconds = true;
+                            }
+                            sqlI+= "  user_sta\n";
+                        }
+                        if(this.user_title != null && !this.user_title.equals("null")) {
+                            if(seconds) {
+                                sqlI+= ",";
+                            } else {
+                                seconds = true;
+                            }
+                            sqlI+= "  user_title\n";
+                        }
+                        if(this.user_email != null && !this.user_email.equals("null")) {
+                            if(seconds) {
+                                sqlI+= ",";
+                            } else {
+                                seconds = true;
+                            }
+                            sqlI+= "  user_email\n";
+                        }
+                        if(this.user_pass != null && !this.user_pass.equals("null")) {
+                            if(seconds) {
+                                sqlI+= ",";
+                            } else {
+                                seconds = true;
+                            }
+                            sqlI+= "  user_pass\n";
+                        }
+                        if(this.user_lock != null && !this.user_lock.equals("null")) {
+                            if(seconds) {
+                                sqlI+= ",";
+                            } else {
+                                seconds = true;
+                            }
+                            sqlI+= "  user_lock\n";
+                        }
+                        if(this.rule_id != null && !this.rule_id.equals("null")) {
+                            if(seconds) {
+                                sqlI+= ",";
+                            } else {
+                                seconds = true;
+                            }
+                            sqlI+= "  rule_id\n";
+                        }
+                        if(this.ter_name != null && !this.ter_name.equals("null")) {
+                            if(seconds) {
+                                sqlI+= ",";
+                            } else {
+                                seconds = true;
+                            }
+                            sqlI+= "  ter_name\n";
+                        }
+                        if(this.third_id != null && !this.third_id.equals("null")) {
+                            if(seconds) {
+                                sqlI+= ",";
+                            } else {
+                                seconds = true;
+                            }
+                            sqlI+= "  third_id\n";
+                        }
+                        if(this.user_try != null && !this.user_try.equals("null")) {
+                            if(seconds) {
+                                sqlI+= ",";
+                            } else {
+                                seconds = true;
+                            }
+                            sqlI+= "  user_try\n";
+                        }
+                        if(seconds) {
+                            sqlI+= ",";
+                        }
+                       sqlI+= "  registerDate\n";
                        sqlI+= " ,lastvisitDate)\n";
-                       sqlI+= "Value ('" + this.user_name + "'\n";
-                       sqlI+= "      ,'" + this.user_sta + "'\n";
-                       sqlI+= "      ,'" + this.user_title + "'\n";
-                       sqlI+= "      ,'" + this.user_email + "'\n";
-                       sqlI+= "      ,'" + this.user_pass + "'\n";
-                       sqlI+= "      ,'" + this.user_lock + "'\n";
-                       sqlI+= "      ,'" + this.rule_id + "'\n";
-                       sqlI+= "      ,'" + this.user_sta + "'\n";
-                       sqlI+= "      ,'" + this.ter_name + "'\n";
-                       sqlI+= "      ,'" + this.user_try + "'\n";
-                       sqlI+= "      ,now()\n";
+                       sqlI+= "Value (\n";
+                        if(this.user_name != null && !this.user_name.equals("null")) {
+                            sqlI+= "'" + this.user_name + "'\n";
+                            seconds = true;
+                        }
+                        if(this.user_sta != null && !this.user_sta.equals("null")) {
+                            if(seconds) {
+                                sqlI+= ",";
+                            } else {
+                                seconds = true;
+                            }
+                            sqlI+= "'" + this.user_sta + "'\n";
+                        }
+                        if(this.user_title != null && !this.user_title.equals("null")) {
+                            if(seconds) {
+                                sqlI+= ",";
+                            } else {
+                                seconds = true;
+                            }
+                            sqlI+= "'" + this.user_title + "'\n";
+                        }
+                        if(this.user_email != null && !this.user_email.equals("null")) {
+                            if(seconds) {
+                                sqlI+= ",";
+                            } else {
+                                seconds = true;
+                            }
+                            sqlI+= "'" + this.user_email + "'\n";
+                        }
+                        if(this.user_pass != null && !this.user_pass.equals("null")) {
+                            if(seconds) {
+                                sqlI+= ",";
+                            } else {
+                                seconds = true;
+                            }
+                            sqlI+= "'" + this.user_pass + "'\n";
+                        }
+                        if(this.user_lock != null && !this.user_lock.equals("null")) {
+                            if(seconds) {
+                                sqlI+= ",";
+                            } else {
+                                seconds = true;
+                            }
+                            sqlI+= "'" + this.user_lock + "'\n";
+                        }
+                        if(this.rule_id != null && !this.rule_id.equals("null")) {
+                            if(seconds) {
+                                sqlI+= ",";
+                            } else {
+                                seconds = true;
+                            }
+                            sqlI+= "'" + this.rule_id + "'\n";
+                        }
+                        if(this.ter_name != null && !this.ter_name.equals("null")) {
+                            if(seconds) {
+                                sqlI+= ",";
+                            } else {
+                                seconds = true;
+                            }
+                            sqlI+= "'" + this.ter_name + "'\n";
+                        }
+                        if(this.third_id != null && !this.third_id.equals("null")) {
+                            if(seconds) {
+                                sqlI+= ",";
+                            } else {
+                                seconds = true;
+                            }
+                            sqlI+= "'" + this.third_id + "'\n";
+                        }
+                        if(this.user_try != null && !this.user_try.equals("null")) {
+                            if(seconds) {
+                                sqlI+= ",";
+                            } else {
+                                seconds = true;
+                            }
+                            sqlI+= "'" + this.user_try + "'\n";
+                        }
+                        if(seconds) {
+                            sqlI+= ",";
+                        }
+                       sqlI+= "       now()\n";
                        sqlI+= "      ,now())\n";
                        db.query.execute(sqlI);
                        sqlI = "Select LAST_INSERT_ID() as " + id + "\n";
                        List<Map<String, String>> lastId = db.setQueryGetList(sqlI);
+                       this.user_id = lastId.get(0).get("user_id");
             } else {
                 String sqlU = "Update " + this.table + "\n";
-                       sqlU+= "Set user_name   = '" + this.user_name + "'\n";
-                       sqlU+= "   ,user_sta    = '" + this.user_sta + "'\n";
-                       sqlU+= "   ,user_title  = '" + this.user_title + "'\n";
-                       sqlU+= "   ,user_email  = '" + this.user_email + "'\n";
-                       sqlU+= "   ,user_pass   = '" + this.user_pass + "'\n";
-                       sqlU+= "   ,user_lock   = '" + this.user_lock + "'\n";
-                       sqlU+= "   ,rule_id     = '" + this.rule_id + "'\n";
-                       sqlU+= "   ,ter_name    = '" + this.ter_name + "'\n";
-                       sqlU+= "   ,third_id    = '" + this.third_id + "'\n";
-                       sqlU+= "   ,user_try    = '" + this.user_try + "'\n";
-                       sqlU+= "   ,lastvisitDate  = now()\n";
+                       sqlU+= "Set ";
+                        if(this.user_name != null && !this.user_name.equals("null")) {
+                            sqlU+= "user_name   = '" + this.user_name + "'\n";
+                            seconds = true;
+                        }
+                        if(this.user_sta != null && !this.user_sta.equals("null")) {
+                            if(seconds) {
+                                sqlU+= ",";
+                            } else {
+                                seconds = true;
+                            }
+                            sqlU+= "  user_sta    = '" + this.user_sta + "'\n";
+                        }
+                        if(this.user_title != null && !this.user_title.equals("null")) {
+                            if(seconds) {
+                                sqlU+= ",";
+                            } else {
+                                seconds = true;
+                            }
+                            sqlU+= "  user_title    = '" + this.user_title + "'\n";
+                        }
+                        if(this.user_email != null && !this.user_email.equals("null")) {
+                            if(seconds) {
+                                sqlU+= ",";
+                            } else {
+                                seconds = true;
+                            }
+                            sqlU+= "  user_email    = '" + this.user_email + "'\n";
+                        }
+                        if(this.user_pass != null && !this.user_pass.equals("null")) {
+                            if(seconds) {
+                                sqlU+= ",";
+                            } else {
+                                seconds = true;
+                            }
+                            sqlU+= "  user_pass    = '" + this.user_pass + "'\n";
+                        }
+                        if(this.user_lock != null && !this.user_lock.equals("null")) {
+                            if(seconds) {
+                                sqlU+= ",";
+                            } else {
+                                seconds = true;
+                            }
+                            sqlU+= "  user_lock    = '" + this.user_lock + "'\n";
+                        }
+                        if(this.rule_id != null && !this.rule_id.equals("null")) {
+                            if(seconds) {
+                                sqlU+= ",";
+                            } else {
+                                seconds = true;
+                            }
+                            sqlU+= "  rule_id    = '" + this.rule_id + "'\n";
+                        }
+                        if(this.ter_name != null && !this.ter_name.equals("null")) {
+                            if(seconds) {
+                                sqlU+= ",";
+                            } else {
+                                seconds = true;
+                            }
+                            sqlU+= "  ter_name    = '" + this.ter_name + "'\n";
+                        }
+                        if(this.third_id != null && !this.third_id.equals("null")) {
+                            if(seconds) {
+                                sqlU+= ",";
+                            } else {
+                                seconds = true;
+                            }
+                            sqlU+= "  third_id    = '" + this.third_id + "'\n";
+                        }
+                        if(this.user_try != null && !this.user_try.equals("null")) {
+                            if(seconds) {
+                                sqlU+= ",";
+                            } else {
+                                seconds = true;
+                            }
+                            sqlU+= "  user_try    = '" + this.user_try + "'\n";
+                        }
                        sqlU+= "Where " + id + " = '" + this.user_id + "'\n";
                        db.query.executeUpdate(sqlU);
             }
@@ -131,18 +338,22 @@ public class Users {
         if(this.user_id != null && !this.user_id.isEmpty()) {
                sql+= "and u.user_id = " + this.user_id + "\n";
         }
+        if(this.user_sta != null && !this.user_sta.isEmpty()) {
+               sql+= "and u.user_sta = '" + this.user_sta + "'\n";
+        }
         if(this.user_name != null && !this.user_name.isEmpty()) {
                sql+= "and u.user_name like '%" + this.user_name + "%'\n";
         }
         if(this.user_email != null && !this.user_email.isEmpty()) {
                sql+= "and u.user_email like '%" + this.user_email + "%'\n";
         }
-        if(this.user_email != null && !this.user_email.isEmpty()) {
-               sql+= "and u.user_email like '%" + this.user_email + "%'\n";
+        if(this.ter_name != null && !this.ter_name.isEmpty()) {
+               sql+= "and u.ter_name like '%" + this.ter_name + "%'\n";
         }
         if(this.rule_id != null && !this.rule_id.isEmpty()) {
                sql+= "and u.rule_id = " + this.rule_id + "\n";
         }
+        sql+= "Order by u.user_id asc\n";
         this.dataList = db.setQueryGetList(sql);
         if(this.view.equals("modify")) {
             this.mergeDataToClass();

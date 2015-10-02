@@ -14,6 +14,7 @@ public class Session {
     private static boolean userStatus   = false;
     private static String userName      = "";
     private static String thirdNames    = "";
+    private static String lastvisitDate    = "";
 
     public static int getUserId() {
         return Session.userId;
@@ -27,6 +28,9 @@ public class Session {
     public static String getThirdNames() {
         return Session.thirdNames;
     }
+    public static String getUserLastLog() {
+        return Session.lastvisitDate;
+    }
     public static void setUserId(int userId) {
         Session.userId     = userId;
     }
@@ -38,5 +42,8 @@ public class Session {
     }
     public static void setUserThirdNames(String thirdNames) {
         Session.thirdNames     = thirdNames;
+    }
+    public static void setUserLastLog(String lastvisitDate) {
+        Session.lastvisitDate     = lastvisitDate;
     }
 }

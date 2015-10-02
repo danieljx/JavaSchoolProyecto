@@ -14,8 +14,12 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -52,7 +56,9 @@ public final class UserList extends JPanel {
     private JButton jButton2;
     private JButton jButton3;
     private JButton jButton4;
+    private JButton jButton5;
     private JPanel jPanel1;
+    private List<Map<String, String>> userDataModel;
     public UserList() throws NoSuchFieldException, SQLException, IllegalArgumentException, IllegalAccessException, IOException, ClassNotFoundException, InstantiationException {
         this.setBackground(new java.awt.Color(0, 51, 86));
         fillPanel   = new JPanel();
@@ -68,15 +74,78 @@ public final class UserList extends JPanel {
         jButton2    = new JButton();
         jButton3    = new JButton();
         jButton4    = new JButton();
+        jButton5    = new JButton();
         
         nameLabel.setText("Nombre");
         emailLabel.setText("Email");
-        staComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Activo", "Inactivo" }));
+        staComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Seleccione", "Activo", "Inactivo" }));
         staLabel.setText("Estatus");
         jButton1.setText("Buscar");
+        jButton5.setText("Limpiar");
+        
+        jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                try {
+                    setFilterUser();
+                } catch (IllegalArgumentException ex) {
+                    Logger.getLogger(UserList.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (IllegalAccessException ex) {
+                    Logger.getLogger(UserList.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (NoSuchFieldException ex) {
+                    Logger.getLogger(UserList.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (SQLException ex) {
+                    Logger.getLogger(UserList.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (IOException ex) {
+                    Logger.getLogger(UserList.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (ClassNotFoundException ex) {
+                    Logger.getLogger(UserList.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (InstantiationException ex) {
+                    Logger.getLogger(UserList.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        });
+        jButton5.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                try {
+                    cleanFilterUser();
+                } catch (IllegalArgumentException ex) {
+                    Logger.getLogger(UserList.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (IllegalAccessException ex) {
+                    Logger.getLogger(UserList.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (NoSuchFieldException ex) {
+                    Logger.getLogger(UserList.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (SQLException ex) {
+                    Logger.getLogger(UserList.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (IOException ex) {
+                    Logger.getLogger(UserList.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (ClassNotFoundException ex) {
+                    Logger.getLogger(UserList.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (InstantiationException ex) {
+                    Logger.getLogger(UserList.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        });
         jButton2.setText("Nuevo");
+        jButton2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                try {
+                    newUserForm();
+                } catch (IllegalArgumentException ex) {
+                    Logger.getLogger(UserList.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (SQLException ex) {
+                    Logger.getLogger(UserList.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (IOException ex) {
+                    Logger.getLogger(UserList.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (ClassNotFoundException ex) {
+                    Logger.getLogger(UserList.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (InstantiationException ex) {
+                    Logger.getLogger(UserList.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (IllegalAccessException ex) {
+                    Logger.getLogger(UserList.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        });
         jButton3.setText("Exportar");
-        jButton4.setText("Imprimir");
         
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -86,9 +155,9 @@ public final class UserList extends JPanel {
                 .addGap(21, 21, 21)
                 .addComponent(jButton1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton2)
+                .addComponent(jButton5)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton4)
+                .addComponent(jButton2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton3)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -99,9 +168,9 @@ public final class UserList extends JPanel {
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1)
-                    .addComponent(jButton2)
+                    .addComponent(jButton5)
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jButton4)
+                        .addComponent(jButton2)
                         .addComponent(jButton3)))
                 .addContainerGap(33, Short.MAX_VALUE))
         );
@@ -154,11 +223,24 @@ public final class UserList extends JPanel {
         gridUsers.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent e) {
                 if (e.getClickCount() == 2) {
-                   JTable target = (JTable) e.getSource();
+                   TableList target = (TableList) e.getSource();
                    int row = target.getSelectedRow();
                    Map<String, String> userRowData = dataModel.get(row);
-                   UserForm userForm = new UserForm(userRowData, target);
-                            userForm.setVisible(true);
+                   UserForm userForm;
+                    try {
+                        userForm = new UserForm(userRowData, target, userDataModel);
+                        userForm.setVisible(true);
+                    } catch (SQLException ex) {
+                        Logger.getLogger(UserList.class.getName()).log(Level.SEVERE, null, ex);
+                    } catch (IOException ex) {
+                        Logger.getLogger(UserList.class.getName()).log(Level.SEVERE, null, ex);
+                    } catch (ClassNotFoundException ex) {
+                        Logger.getLogger(UserList.class.getName()).log(Level.SEVERE, null, ex);
+                    } catch (InstantiationException ex) {
+                        Logger.getLogger(UserList.class.getName()).log(Level.SEVERE, null, ex);
+                    } catch (IllegalAccessException ex) {
+                        Logger.getLogger(UserList.class.getName()).log(Level.SEVERE, null, ex);
+                    }
                 }
             }
         });
@@ -174,6 +256,8 @@ public final class UserList extends JPanel {
         return userModel.getUsers();
     }
     public void setDataModel(List<Map<String, String>> userDataModel) {
+        this.userDataModel = userDataModel;
+        gridUsers.cleanTable();
         for(Map<String, String> map : userDataModel) {
             Object[] data = new Object[3];
             data[0] = map.get("ter_name");
@@ -182,7 +266,40 @@ public final class UserList extends JPanel {
             gridUsers.setRow(data);
         }
     }
-    public void insert() {
-        
+    public void newUserForm() throws SQLException, IOException, ClassNotFoundException, InstantiationException, IllegalAccessException {
+        Map<String, String> userFilterData = new HashMap<String, String>();
+        userFilterData.put("view", "modify");
+        userFilterData.put("accion", "add");
+        userFilterData.put("user_id", "");
+        userFilterData.put("user_title", "");
+        userFilterData.put("ter_name", "");
+        userFilterData.put("user_name", "");
+        userFilterData.put("user_email", "");
+        userFilterData.put("user_pass", "");
+        userFilterData.put("user_sta", "");
+        UserForm userForm = new UserForm(userFilterData, gridUsers, this.userDataModel);
+                 userForm.setVisible(true);
+    }
+    public void cleanFilterUser() throws NoSuchFieldException, SQLException, IllegalArgumentException, IllegalAccessException, IOException, ClassNotFoundException, InstantiationException {
+        nameField.setText("");
+        emailField.setText("");
+        staComboBox.setSelectedItem("Seleccione");
+        List<Map<String, String>> dataModel = this.getDataModel();
+        this.setDataModel(dataModel);
+    }
+    public void setFilterUser() throws IllegalArgumentException, IllegalAccessException, NoSuchFieldException, SQLException, IOException, ClassNotFoundException, InstantiationException {
+        Map<String, String> userFilterData = new HashMap<String, String>();
+        userFilterData.put("view", "list");
+        if(!nameField.getText().isEmpty()) {
+            userFilterData.put("ter_name", nameField.getText());
+        }
+        if(!emailField.getText().isEmpty()) {
+            userFilterData.put("user_email", emailField.getText());
+        }
+        if(!staComboBox.getSelectedItem().toString().equals("Seleccione")) {
+            userFilterData.put("user_sta", (staComboBox.getSelectedItem().toString().equals("Activo")?"S":"N"));
+        }
+        userModel = new Users(userFilterData);
+        setDataModel(userModel.getUsers());
     }
 }
